@@ -1,0 +1,168 @@
+% This project is part of the LikelihoodGrids project.
+% Copyright 2020 the authors.
+
+% to-do
+% -----
+% - zeroth draft
+% - write abstract
+% - make figures and captions
+% - find and eliminate all HOGG, TODO, XXX, etc.
+% - define and use acronym macro.
+
+\documentclass[12pt]{article}
+
+% margins and shih
+\addtolength{\topmargin}{-1.00in}
+\addtolength{\textheight}{1.75in}
+\raggedbottom\sloppy\sloppypar\frenchspacing
+
+\newcommand{\sectionname}{Section}
+
+\begin{document}
+
+\section*{Data analysis recipes:\\
+          Manipulating and interpolating grids\\
+          of models, chi-squared values, and likelihoods%
+\footnote{This document is Copyright 2020 the authors. You may
+  reproduce and distribute it as you like, provided that you make no
+  modifications to it whatsoever.}}
+
+\noindent
+\textbf{David W Hogg}%
+\footnote{The author thanks
+  Mike Blanton (NYU),
+  Morgan Fouesneau (MPIA),
+  Marla Geha (Yale), and
+  Robert Lupton (Princeton)
+for valuable discussions of these subjects.}\\
+\textsl{\footnotesize%
+Center for Cosmology and Particle Physics, Department of Physics, New York University\\
+Max-Planck-Institut f\"ur Astronomie, Heidelberg\\
+Flatiron Institute, a division of the Simons Foundation}
+
+\paragraph{abstract:}
+foo and bar
+
+\section{Why model grids?}
+
+In most data-analysis problems in the physical sciences, the
+parameters of interest are continuous in some (possibly infinite)
+domain.
+For example, you might want to know the radial-velocity of a star, or
+the age of the Universe, or the mass of the Higgs boson.
+Data analysis proceeds often by maximizing or evaluating a loss
+function or likelihood function, or by evaluating or sampling or
+integrating a posterior probability density function (posterior pdf).
+The loss function might be something like the sum of the squares of
+the residuals of the model predictions away from the data values, or
+that weighted by the inverse variance of the noise model (what we
+often call ``chi-squared'').
+In these kinds of problems, the optimizer or sampler or function
+evaluator can exercise the function at any values of the continuous
+parameters.
+
+However, there are many situations in which, for computational or
+operational or mathematical reasons, you can or should only evaluate
+your model on a discrete grid or at some set of pre-chosen points in
+the parameter space.
+For one example, sometimes the model is extremely computationally
+expensive.
+You can't afford to compute it arbitraily many times, and you might be
+able to use the computations you do perform repeatedly if you choose a
+good grid.
+Or the model might not be all that expensive to execute, but you are
+performing inference on the fly or in real time, where speed is of the
+essence.
+For another example, you might know, for mathematical reasons, that
+there can't be structure in the loss function below some scale in your
+parameter space.
+This can happen when you have, say, an information-theoretic bound on
+the precision of a measurement or some kind of band limit or finite
+resolution to your data.
+When this is true, there is no mathematical point in sampling your
+function on a much finer scale than this information-theoretic bound.
+
+Manipulation and interpolation of these model grids is commonplace in
+the physical sciences, and nothing we report here is novel or
+controversial.
+The purpose of this document is to record and disseminate the implicit
+knowledge that we have developed over the years of working with such
+problems.
+
+\section{The one-dimensional example}
+
+HOGG: RV of a star: 
+Imagine that we are trying to measure the radial velocity of a star,
+by taking a spectrum and comparing it to a reference spectrum.
+The radial velocity is measured by the Doppler Shift in which spectral
+features are shifted to the blue or red if the star is moving towards
+or away from us.
+
+Figure~XXX shows 
+
+The argument that there can't be information below the resolution of
+the instrument. Well there can be \emph{information} but not structure
+in the loss function.
+
+Fitting a quadratic to the loss.
+
+Compare to a finely gridded example; it is good!
+
+Why?
+
+Conditions under which this is exactly correct.
+
+Error analysis. Why does this work?
+
+\section{Likelihoods, posterior pdfs, and loss functions}
+
+how is chi-squared related to gaussian LF?
+
+why do we expect LLF peaks to be quadratic?
+
+posterior and prior pdfs.
+
+What does the error analysis depend on? It depends on the loss being
+the LLF and not divided or multiplied by something dumb (like the
+number of pixels).
+
+\section{Interpolate the model or the loss function?}
+
+The loss function is quadratic in the residual, which is quadratic in
+the model expectation.
+Is there any sense in which quadratically interpolating the loss is
+mathematically equivalent to linearly interpolating the model
+expectation?
+I actually don't know what to say here. 
+
+\section{The $K$-dimensional case}
+
+Do I have anything to say here?
+
+\section{Is your grid fine and large enough?}
+
+stuff about interpolation predictive accuracy.
+
+stuff about extrapolation. Note that as $K$ gets large it becomes
+more likely that you are outside the grid.
+
+\section{Irregular grids}
+
+One kind of irregularity: random grid. Usually not a good idea.
+Because you get all the issues of a grid with none of the guarantees
+of proximity or coverage that a regular grid might provide.
+However, if you are ``gifted'' with an irregular grid, the general
+principles of taking close points and fitting a parabola still apply.
+And it is still the case that you can assess the grid density with
+interpolations, as per \sectionname~XXX.
+
+The other kind of irregularity is a regular grid with dropped points.
+Anything to say here.
+
+Latin hypercube might be a good idea for some things. Why?
+
+\section{Discussion and open questions}
+
+\section{References}
+
+\end{document}
